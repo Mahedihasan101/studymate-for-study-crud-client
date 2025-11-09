@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 
 const Navbar = () => {
@@ -14,7 +15,7 @@ const Navbar = () => {
            
             <div>
                 <ul className='flex gap-6 text-center font-medium font-[] text-[15px]'>
-                    <li>Home</li>
+                   <Link to='/'><li>Home</li></Link>
                     <li>Find Partners</li>
                     <li>Create Partner Profile</li>
                     <li>My Connections</li>
@@ -22,7 +23,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div>
-                <button className='btn btn-primary bg-blue-500 px-7'>Login</button>
+               <Link to='/login'> <button className='btn btn-primary bg-blue-500 px-7'>Login</button></Link>
             </div>
            </div>
         </div>
