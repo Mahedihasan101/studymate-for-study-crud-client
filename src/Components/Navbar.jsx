@@ -13,7 +13,7 @@ const Navbar = () => {
               </div>
            
             <div>
-                <ul className='flex gap-4 text-center font-bold font-[roboto] text-[15px]'>
+                <ul className='flex gap-6 text-center font-medium font-[] text-[15px]'>
                     <li>Home</li>
                     <li>Find Partners</li>
                     <li>Create Partner Profile</li>
