@@ -1,23 +1,33 @@
 import { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
 
-  const { createUser } = use(AuthContext);
+  const { createUser, signInWithGoogle } = use(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    createUser(email,password)
-    .then(result =>{
-      console.log(result.user)
-    })
-    .catch(error =>{
-      console.log(error)
-    })
+    createUser(email, password)
+      .then(result => {
+        console.log(result.user)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then(result => {
+        console.log("Google Login:", result.user);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
 
 
   return (
@@ -55,6 +65,7 @@ const Register = () => {
               required
             />
           </div>
+          <button onClick={handleGoogleLogin} className="btn bg-gray-200 w-full"> <FcGoogle />Continue with Google</button>
           <button
             type="submit"
             className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-semibold transition-colors"

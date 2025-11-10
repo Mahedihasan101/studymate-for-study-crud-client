@@ -1,10 +1,9 @@
-import React, {  use, useState } from "react";
-
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { Link, useNavigate } from "react-router";
 
 const Navbar = () => {
-    const { user, signOutUser } = use(AuthContext);
+    const { user, signOutUser } = useContext(AuthContext);
     const [openDropdown, setOpenDropdown] = useState(false);
     const navigate = useNavigate();
 
@@ -14,7 +13,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-sm text-black">
+        <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-sm text-black">
             <div className="flex justify-between items-center max-w-[1320px] mx-auto p-5">
 
                 <div>
@@ -26,8 +25,14 @@ const Navbar = () => {
                 <ul className="flex gap-6 font-medium text-[15px]">
                     <Link to="/"><li>Home</li></Link>
                     <Link to="/find-partners"><li>Find Partners</li></Link>
-                    <Link to="/create-partner-profile"><li>Create Partner Profile</li></Link>
-                    <Link to="/my-connections"><li>My Connections</li></Link>
+
+                    {/* SHOW ONLY AFTER LOGIN */}
+                    {user && (
+                        <>
+                            <Link to="/create-partner-profile"><li>Create Partner Profile</li></Link>
+                            <Link to="/my-connections"><li>My Connections</li></Link>
+                        </>
+                    )}
                 </ul>
 
                 <div>
@@ -58,11 +63,13 @@ const Navbar = () => {
                             )}
                         </div>
                     ) : (
-                        <Link to="/login">
-                            <button className="btn btn-primary bg-blue-500 px-7 text-white rounded-md">
-                                Login
-                            </button>
-                        </Link>
+                        <div className="flex gap-3">
+                            <Link to="/login">
+                                <button className="px-7 py-2 bg-blue-500 text-white rounded-md">
+                                    Login
+                                </button>
+                            </Link>
+                        </div>
                     )}
                 </div>
             </div>

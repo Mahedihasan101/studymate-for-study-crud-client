@@ -1,9 +1,10 @@
 import { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-const {signInUser}=use(AuthContext);
+const {signInUser,signInWithGoogle}=use(AuthContext);
 
 const handleLogIn = (e)=>{
   e.preventDefault();
@@ -18,6 +19,15 @@ const handleLogIn = (e)=>{
     })
 
 }
+const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then(result => {
+        console.log("Google Login:", result.user);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -43,6 +53,7 @@ const handleLogIn = (e)=>{
               required
             />
           </div>
+          <button onClick={handleGoogleLogin} className="btn bg-gray-200 w-full"> <FcGoogle/>Continue with Google</button>
           <button
             type="submit"
             className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-semibold transition-colors"
