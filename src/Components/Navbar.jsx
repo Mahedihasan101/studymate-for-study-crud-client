@@ -1,32 +1,72 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, {  use, useState } from "react";
 
+import { AuthContext } from "../Contexts/AuthContext/AuthContext";
+import { Link, useNavigate } from "react-router";
 
 const Navbar = () => {
-    return (
-        <div className='bg-white '>
-           <div className='flex justify-between text-center items-center max-w-[1320px] mx-auto p-5'>
-            
-              
-              <div className='flex flex-col gap-0'>
-                  <h1 className='font-[roboto] font-black text-[27px]'>Study<span className='text-blue-500'>Mate.</span></h1>
-             
-              </div>
-           
-            <div>
-                <ul className='flex gap-6 text-center font-medium font-[] text-[15px]'>
-                   <Link to='/'><li>Home</li></Link>
-                    <li>Find Partners</li>
-                    <li>Create Partner Profile</li>
-                    <li>My Connections</li>
+    const { user, signOutUser } = use(AuthContext);
+    const [openDropdown, setOpenDropdown] = useState(false);
+    const navigate = useNavigate();
 
+    const handleLogout = () => {
+        signOutUser();
+        navigate("/login");
+    };
+
+    return (
+        <nav className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-sm text-black">
+            <div className="flex justify-between items-center max-w-[1320px] mx-auto p-5">
+
+                <div>
+                    <h1 className="font-black text-[27px]">
+                        Study<span className="text-blue-500">Mate.</span>
+                    </h1>
+                </div>
+
+                <ul className="flex gap-6 font-medium text-[15px]">
+                    <Link to="/"><li>Home</li></Link>
+                    <Link to="/find-partners"><li>Find Partners</li></Link>
+                    <Link to="/create-partner-profile"><li>Create Partner Profile</li></Link>
+                    <Link to="/my-connections"><li>My Connections</li></Link>
                 </ul>
+
+                <div>
+                    {user ? (
+                        <div className="relative">
+                            <img
+                                src={user.photoURL}
+                                alt="Profile"
+                                className="w-10 h-10 rounded-full cursor-pointer border-2 border-blue-500"
+                                onClick={() => setOpenDropdown(!openDropdown)}
+                            />
+
+                            {openDropdown && (
+                                <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md p-3 w-40">
+                                    <button
+                                        className="block text-left w-full hover:text-blue-500"
+                                        onClick={() => navigate("/profile")}
+                                    >
+                                        Profile
+                                    </button>
+                                    <button
+                                        className="block text-left w-full mt-2 hover:text-red-500"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            <button className="btn btn-primary bg-blue-500 px-7 text-white rounded-md">
+                                Login
+                            </button>
+                        </Link>
+                    )}
+                </div>
             </div>
-            <div>
-               <Link to='/login'> <button className='btn btn-primary bg-blue-500 px-7'>Login</button></Link>
-            </div>
-           </div>
-        </div>
+        </nav>
     );
 };
 
