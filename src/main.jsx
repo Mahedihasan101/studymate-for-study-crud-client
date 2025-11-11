@@ -9,6 +9,8 @@ import Login from './Components/Login.jsx';
 import Register from './Components/Register.jsx';
 import AuthProvider from './Contexts/AuthContext/AuthProvider.jsx';
 import UserProfile from './Components/UserProfile.jsx';
+import FindPartner from './Components/FindPartners.jsx';
+import PartnerProfile from './Components/PartnerProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path:'/profile',
         element:<UserProfile/>
+      },
+      {
+        path:'/find-partners',
+        element:<FindPartner/>
+      },
+      {
+        path:'/partners-details/:id',
+        element:<PartnerProfile/>
       }
     ],
   },
