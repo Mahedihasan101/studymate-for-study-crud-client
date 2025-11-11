@@ -5,7 +5,7 @@ export default function UserProfile() {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex justify-center items-center p-6">
+    <div className="min-h-screen bg-gradient-to-br- from-gray-900 via-gray-800 to-black text-white flex justify-center items-center p-6">
       <div className="max-w-2xl w-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl p-10 text-center">
 
         <img

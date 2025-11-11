@@ -10,7 +10,7 @@ import Register from './Components/Register.jsx';
 import AuthProvider from './Contexts/AuthContext/AuthProvider.jsx';
 import UserProfile from './Components/UserProfile.jsx';
 import FindPartner from './Components/FindPartners.jsx';
-import PartnerProfile from './Components/PartnerProfile.jsx';
+import PartnerProfile from './Components/PartnerProdile.jsx';
 import CreatePartnerProfile from './Components/CreatePartnerProdile.jsx';
 
 const router = createBrowserRouter([

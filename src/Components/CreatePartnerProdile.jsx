@@ -1,33 +1,47 @@
 // CreatePartnerProfile.jsx
-import React, { useState } from "react";
+
+import { use } from 'react';
 import img from '../assets/bgimg.jpg'
+import { AuthContext } from '../Contexts/AuthContext/AuthContext';
 
 const CreatePartnerProfile = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    imageUrl: "",
-    price: "",
-    processingTime: "",
-    rating: "",
-    description: "",
-    stock: "",
-    customizable: false,
-  });
+//   subject,studyMode,AvailabilityTime,location,partnerCount,rating
+const {user}= use(AuthContext);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        const formData = {
+            name:e.target.name.value,
+            experience:e.target.experience.value,
+            imageUrl:e.target.imageUrl.value,
+            subject:e.target.subject.value,
+            studyMode:e.target.studyMode.value,
+            availabilityTime:e.target.availabilityTime.value,
+            location:e.target.location.value,
+            partnerCount:0,
+            rating:0,
+            email:user.email
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Partner Profile Data:", formData);
-    // Add your API call here
-  };
+        }
+        
+        fetch('http://localhost:3000/users',{
+            method:"POST",
+            headers:{
+                "Content-Type": "application/json",
+                },
+                body:JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data=>{
+            console.log(data)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+
+    }
+
+ 
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4  " style={{
@@ -39,13 +53,11 @@ const CreatePartnerProfile = () => {
   
      <div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mt-10 mb-5">Create <span className="text-blue-500">Partner Profile</span></h2>
-         <form
-        onSubmit={handleSubmit}
+         <form onSubmit={handleSubmit}
+        
         className=" rounded-2xl shadow-2xl p-8 w-full max-w-3xl  bg-[#e7e2de] "
       >
-        <h2 className="text-2xl border- font-bold text-gray-800 mb-6">
-          Basic Info
-        </h2>
+       
 
         {/* Basic Info */}
         <div className="mb-6">
@@ -56,88 +68,98 @@ const CreatePartnerProfile = () => {
             <input
               type="text"
               name="name"
-              placeholder="Item Name"
-              value={formData.name}
-              onChange={handleChange}
+              required
+              placeholder="Name"
+             
+              
               className="border border-blue-600   rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             />
             <input
               type="text"
-              name="category"
-              placeholder="Sub Category Name"
-              value={formData.category}
-              onChange={handleChange}
+              name="experience"
+              required
+              placeholder="Experience Level"
+            
+              
               className="border border-blue-600   rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             />
           </div>
           <input
             type="text"
             name="imageUrl"
-            placeholder="Image URL"
-            value={formData.imageUrl}
-            onChange={handleChange}
+            required
+            placeholder="Profile image"
+            
             className="border border-blue-600   rounded-2xl px-4 py-2 mt-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
           />
         </div>
 
-        {/* Product Details */}
+        
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-700 mb-2">
-            Product Details
+            Study Details
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <input
             
               type="text"
-              name="price"
-              placeholder="Product price"
-              value={formData.price}
-              onChange={handleChange}
+              name="subject"
+              required
+              placeholder="Subject"
+          
+              className="border border-blue-600   rounded-2xl px-4 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+            <input
+              type="text"
+              name="studyMode"
+              required
+              placeholder=" Study mode"
+             
+              className="border border-blue-600   rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+            <input
+              type="text"
+              name="availabilityTime"
+              required
+              placeholder="Availability time"
+             
+              className="border border-blue-600  rounded-2xl l  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
+          </div>
+          <input
+            type="text"
+            name="email"
+            required
+            placeholder="Email"
+           
+            className="border border-blue-600   rounded-2xl px-4 py-2 my-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <input
+            
+              type="text"
+              name="location"
+              required
+              placeholder="Location"
+            
               className="border border-blue-600   rounded-2xl px-4 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-400"
             />
             <input
               type="text"
               name="processingTime"
-              placeholder="Processing time"
-              value={formData.processingTime}
-              onChange={handleChange}
+              required
+              placeholder="Rating"
+             
               className="border border-blue-600   rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             />
             <input
               type="text"
-              name="rating"
-              placeholder="Rating"
-              value={formData.rating}
-              onChange={handleChange}
+              name="partnerCount"
+              required
+              placeholder="Partner Count"
+             
               className="border border-blue-600  rounded-2xl l  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             />
-          </div>
-          <textarea
-            name="description"
-            placeholder="Product description"
-            value={formData.description}
-            onChange={handleChange}
-            className="border border-blue-600     rounded-2xl px-4 py-2 w-full h-24 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-4"
-          ></textarea>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="stock"
-              placeholder="Stock status"
-              value={formData.stock}
-              onChange={handleChange}
-              className="border border-blue-600  rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
-            <label className="flex items-center space-x-2 border border-blue-600    rounded-2xl px-4 py-2 cursor-pointer focus-within:ring-2 focus-within:ring-yellow-400">
-              <input
-                type="checkbox"
-                name="customizable"
-                checked={formData.customizable}
-                onChange={handleChange}
-                className="form-checkbox h-5 w-5border-blue-600   rounded-3xl "
-              />
-              <span className="border-blue-500">Is this Customizable?</span>
-            </label>
           </div>
         </div>
 

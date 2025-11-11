@@ -22,7 +22,6 @@ export default function FindPartner() {
     )
     .sort((a, b) => {
       if (sort === "rating") return b.rating - a.rating;
-      if (sort === "experience") return a.experienceLevel.localeCompare(b.experienceLevel);
       return 0;
     });
 
@@ -45,7 +44,6 @@ export default function FindPartner() {
         >
           <option value="">Sort By</option>
           <option value="rating">Highest Rating</option>
-          <option value="experience">Experience Level (A–Z)</option>
         </select>
       </div>
 
@@ -81,7 +79,7 @@ export default function FindPartner() {
             </div>
 
             <button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-              Connect
+              View Profile
             </button>
           </div>
         ))}
