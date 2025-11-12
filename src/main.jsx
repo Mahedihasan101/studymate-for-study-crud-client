@@ -13,6 +13,7 @@ import FindPartner from './Components/FindPartners.jsx';
 import PartnerProfile from './Components/PartnerProdile.jsx';
 import CreatePartnerProfile from './Components/CreatePartnerProdile.jsx';
 import MyConnections from './Components/MyConnections.jsx';
+import UpdateProfile from './Components/UpdateProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,25 +33,34 @@ const router = createBrowserRouter([
         element: <Register />
       },
       {
-        path:'/profile',
-        element:<UserProfile/>
+        path: '/profile',
+        element: <UserProfile />
       },
       {
-        path:'/find-partners',
-        element:<FindPartner/>
+        path: '/find-partners',
+        element: <FindPartner />
       },
       {
-        path:'/create-partner-profile',
-        element:<CreatePartnerProfile/>,
+        path: '/create-partner-profile',
+        element: <CreatePartnerProfile />,
       },
 
       {
-        path:'/partners-details/:id',
-        element:<PartnerProfile/>
+        path: '/partners-details/:id',
+        element: <PartnerProfile />
       },
       {
-        path:'/my-connections',
-        element:<MyConnections/>
+        path: '/my-connections',
+        element: <MyConnections />
+      },
+      {
+        path: '/update-profile/:id',
+        element: <UpdateProfile />,
+        loader: async ({ params }) => {
+          const res = await fetch(`http://localhost:3000/users/${params.id}`);
+          const data = await res.json(); 
+          return { result: data }; 
+        }
       }
     ],
   },
