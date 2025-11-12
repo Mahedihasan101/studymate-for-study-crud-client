@@ -5,7 +5,6 @@ import img from '../assets/bgimg.jpg'
 import { AuthContext } from '../Contexts/AuthContext/AuthContext';
 
 const CreatePartnerProfile = () => {
-//   subject,studyMode,AvailabilityTime,location,partnerCount,rating
 const {user}= use(AuthContext);
 
     const handleSubmit = (e)=>{
@@ -129,6 +128,7 @@ const {user}= use(AuthContext);
           <input
             type="text"
             name="email"
+            defaultValue={user?.email}
             required
             placeholder="Email"
            
@@ -155,6 +155,7 @@ const {user}= use(AuthContext);
             <input
               type="text"
               name="partnerCount"
+              defaultValue={'0'}
               required
               placeholder="Partner Count"
              

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function FindPartner() {
   const [partners, setPartners] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch("http://localhost:3000/users")
@@ -78,7 +80,7 @@ export default function FindPartner() {
               <p><span className="font-medium">Rating:</span> {p.rating} ⭐</p>
             </div>
 
-            <button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button onClick={()=> navigate(`/partners-details/${p._id}`)} className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
               View Profile
             </button>
           </div>

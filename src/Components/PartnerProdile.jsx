@@ -5,6 +5,7 @@ const PartnerProfile = () => {
   const { id } = useParams(); // Get partner ID from route
   const [partner, setPartner] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:3000/users/${id}`)
@@ -17,7 +18,29 @@ const PartnerProfile = () => {
         console.error(err);
         setLoading(false);
       });
-  });
+  }, [id]); // ✅ add dependency so it doesn't refetch infinitely
+
+  // --- handle send partner request ---
+  const handleSendRequest = async () => {
+    try {
+      setSending(true);
+      const response = await fetch(`http://localhost:3000/users/${id}/request`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) throw new Error("Failed to send partner request");
+
+      const updatedPartner = await response.json();
+      setPartner(updatedPartner); // update state with new count
+      alert("Partner request sent successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Error sending request.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -52,8 +75,17 @@ const PartnerProfile = () => {
           <p className="text-gray-600"><span className="font-semibold">Location:</span> {partner.location}</p>
           <p className="text-gray-600"><span className="font-semibold">Experience Level:</span> {partner.experienceLevel}</p>
           <p className="text-yellow-500 font-semibold">⭐ {partner.rating}</p>
-          <p className="text-gray-600"><span className="font-semibold">Partner Count:</span> {partner.patnerCount}</p>
-          <p className="text-gray-600"><span className="font-semibold">Email:</span> {partner.email}</p>
+          <p className="text-gray-600"><span className="font-semibold">Partner Count:</span> {partner.partnerCount}</p>
+          <div>
+            <p className="text-gray-600"><span className="font-semibold">Email:</span> {partner.email}</p>
+            <button
+              className="btn btn-primary mt-3"
+              onClick={handleSendRequest}
+              disabled={sending}
+            >
+              {sending ? "Sending..." : "Send Partner Request"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
