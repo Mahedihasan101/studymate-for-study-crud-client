@@ -1,16 +1,17 @@
+// FindPartner.js
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router"; 
 
 export default function FindPartner() {
   const [partners, setPartners] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/users")
-      .then(res => res.json())
-      .then(data => setPartners(data));
+    fetch("http://localhost:5000/users")
+      .then((res) => res.json())
+      .then((data) => setPartners(data));
   }, []);
 
   const handleSearch = (e) => {
@@ -18,9 +19,10 @@ export default function FindPartner() {
   };
 
   const filteredPartners = partners
-    .filter((p) =>
-      p.name.toLowerCase().includes(search) ||
-      p.subject.toLowerCase().includes(search)
+    .filter(
+      (p) =>
+        p.name.toLowerCase().includes(search) ||
+        p.subject.toLowerCase().includes(search)
     )
     .sort((a, b) => {
       if (sort === "rating") return b.rating - a.rating;
@@ -29,7 +31,9 @@ export default function FindPartner() {
 
   return (
     <div className="max-w-6xl mx-auto px-5 py-8">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mt-10">Find <span className="text-blue-500">Study Partner</span></h2>
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mt-10">
+        Find <span className="text-blue-500">Study Partner</span>
+      </h2>
 
       {/* Search + Sort Controls */}
       <div className="flex flex-col md:flex-row mt-5 justify-end gap-3 mb-6">
@@ -73,14 +77,29 @@ export default function FindPartner() {
             </div>
 
             <div className="mt-4 space-y-1 text-sm text-gray-700">
-              <p><span className="font-medium">Study Mode:</span> {p.studyMode}</p>
-              <p><span className="font-medium">Availability:</span> {p.availabilityTime}</p>
-              <p><span className="font-medium">Location:</span> {p.location}</p>
-              <p><span className="font-medium">Experience:</span> {p.experienceLevel}</p>
-              <p><span className="font-medium">Rating:</span> {p.rating} ⭐</p>
+              <p>
+                <span className="font-medium">Study Mode:</span> {p.studyMode}
+              </p>
+              <p>
+                <span className="font-medium">Availability:</span>{" "}
+                {p.availabilityTime}
+              </p>
+              <p>
+                <span className="font-medium">Location:</span> {p.location}
+              </p>
+              <p>
+                <span className="font-medium">Experience:</span>{" "}
+                {p.experienceLevel}
+              </p>
+              <p>
+                <span className="font-medium">Rating:</span> {p.rating} ⭐
+              </p>
             </div>
 
-            <button onClick={()=> navigate(`/partners-details/${p._id}`)} className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button
+              onClick={() => navigate(`/partners-details/${p._id}`)}
+              className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
               View Profile
             </button>
           </div>

@@ -8,7 +8,7 @@ const TopPartners = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/users")
+    fetch("http://localhost:5000/users")
       .then((res) => res.json())
       .then((data) => {
         const topThree = data
@@ -22,7 +22,6 @@ const TopPartners = () => {
     if (user) {
       navigate(`/partners-details/${id}`);
     } else {
-      // Pass the intended destination to login page
       navigate("/login", { state: { from: `/partners-details/${id}` } });
     }
   };

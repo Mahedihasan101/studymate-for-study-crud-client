@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         path: '/update-profile/:id',
         element: <UpdateProfile />,
         loader: async ({ params }) => {
-          const res = await fetch(`http://localhost:3000/users/${params.id}`);
+          const res = await fetch(`http://localhost:5000/users/${params._id}`);
           const data = await res.json(); 
           return { result: data }; 
         }

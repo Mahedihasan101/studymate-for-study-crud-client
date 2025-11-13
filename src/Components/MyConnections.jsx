@@ -1,152 +1,107 @@
 import { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { Link } from "react-router";
-import img from '../assets/joyful-TqnN_11wKas-unsplash.jpg'
+import { useNavigate } from "react-router";
 
-const MyConnections = () => {
-  const auth = getAuth();
-  const [user, setUser] = useState(null);
-  const [profiles, setProfiles] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function Connections() {
+  const [partners, setPartners] = useState([]);
+  const navigate = useNavigate();
 
-  // 🔹 Check user & fetch data
+
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        fetchProfiles(currentUser.email);
-      } else {
-        setUser(null);
-        setProfiles([]);
-        setLoading(false);
+    const fetchConnections = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/users/${id}/request`);
+        const data = await res.json();
+        setPartners(data);
+      } catch (err) {
+        console.error(err);
       }
-    });
+    };
 
-    return () => unsubscribe();
+    fetchConnections();
   }, []);
 
-  // 🔹 Fetch profiles from server
-  const fetchProfiles = (email) => {
-    fetch(`http://localhost:3000/my-users?email=${email}`)
-      .then((res) => res.json())
-      .then((data) => setProfiles(data))
-      .catch((err) => console.error("Fetch failed:", err))
-      .finally(() => setLoading(false));
-  };
+  const handleDelete = async (partnerId) => {
+    if (!window.confirm("Are you sure you want to delete this partner?")) return;
 
-  // 🔹 Delete profile
-  const handleDelete = (id) => {
-    if (!confirm("Are you sure you want to delete this profile?")) return;
+    try {
+      await fetch(`http://localhost:5000/users/${id}/remove-connection`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ partnerId })
+      });
 
-    fetch(`http://localhost:3000/users/${id}`, {
-      method: "DELETE",
-    })
-      .then(() => {
-        alert("Profile deleted successfully 🗑️");
-        setProfiles((prev) => prev.filter((item) => item._id !== id));
-      })
-      .catch((err) => console.error("Delete failed:", err));
+      setPartners((prev) => prev.filter((p) => p._id !== partnerId));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to remove connection");
+    }
   };
 
   return (
-    <div className=" min-h-screen bg-gradient-to-br  from-blue-100 to-purple-100 py-10 px-6 mt-15"style={{
-                backgroundImage: `url(${img})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-            }}>
-      <h2 className="text-4xl font-bold text-center text-gray-800 mb-10 drop-shadow">
-        My Connections
-      </h2>
-
-      {loading ? (
-        <p className="text-center mt-16 text-gray-600 text-lg">Loading...</p>
-      ) : profiles.length === 0 ? (
-        <p className="text-center  text-gray-600 text-lg ">
-          You haven’t added any partner profiles yet.
-        </p>
-      ) : (
-        <div className=" max-w-[1320px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-          {profiles.map((profile) => (
-            <div
-              key={profile._id}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition"
-            >
-              {profile.profileimage && (
-                <img
-                  src={profile.profileimage}
-                  alt={profile.name || "Profile"}
-                  className="w-full h-56 object-cover"
-                />
-              )}
-
-              <div className="p-5 space-y-2">
-                {profile.name && (
-                  <h3 className="text-2xl font-bold text-gray-800">
-                    {profile.name}
-                  </h3>
-                )}
-                {profile.subject && (
-                  <p className="text-gray-600 text-lg">{profile.subject}</p>
-                )}
-
-                <div className="text-sm text-gray-500 space-y-1">
-                  {profile.studyMode && (
-                    <p>
-                      <span className="font-semibold">Study Mode:</span>{" "}
-                      {profile.studyMode}
-                    </p>
-                  )}
-                  {profile.availabilityTime && (
-                    <p>
-                      <span className="font-semibold">Availability:</span>{" "}
-                      {profile.availabilityTime}
-                    </p>
-                  )}
-                  {profile.location && (
-                    <p>
-                      <span className="font-semibold">Location:</span>{" "}
-                      {profile.location}
-                    </p>
-                  )}
-                  {profile.experienceLevel && (
-                    <p>
-                      <span className="font-semibold">Experience:</span>{" "}
-                      {profile.experienceLevel}
-                    </p>
-                  )}
-                  {profile.rating && (
-                    <p>
-                      <span className="font-semibold">Rating:</span>{" "}
-                      {profile.rating}
-                    </p>
-                  )}
-                </div>
-
-                {/* 🔹 Buttons */}
-                <div className="flex justify-between pt-4">
-                  <Link to={`/update-profile/${profile._id}`}>
-                   <button
-                    className="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white text-sm cursor-not-allowed"
-                    title="Update feature coming soon"
+    <div className="max-w-7xl mx-auto p-5">
+      <h2 className="text-3xl font-bold mb-5">My Connections</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-3 text-left">Profile</th>
+              <th className="p-3 text-left">Name</th>
+              <th className="p-3 text-left">Subject</th>
+              <th className="p-3 text-left">Study Mode</th>
+              <th className="p-3 text-left">Availability</th>
+              <th className="p-3 text-left">Location</th>
+              <th className="p-3 text-left">Experience</th>
+              <th className="p-3 text-left">Rating</th>
+              <th className="p-3 text-left">Partner Count</th>
+              <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partners.map((p) => (
+              <tr key={p._id} className="border-b hover:bg-gray-50 transition duration-200">
+                <td className="p-3">
+                  <img
+                    src={p.profileimage}
+                    alt={p.name}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-yellow-400"
+                  />
+                </td>
+                <td className="p-3 font-medium">{p.name}</td>
+                <td className="p-3">{p.subject}</td>
+                <td className="p-3">{p.studyMode}</td>
+                <td className="p-3">{p.availabilityTime}</td>
+                <td className="p-3">{p.location}</td>
+                <td className="p-3">{p.experienceLevel}</td>
+                <td className="p-3">{p.rating} ⭐</td>
+                <td className="p-3">{p.partnerCount}</td>
+                <td className="p-3">{p.email}</td>
+                <td className="p-3 space-x-2">
+                  <button
+                    onClick={() => navigate(`/partners-details/${p._id}`)}
+                    className="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                  >
+                    View
+                  </button>
+                  <button
+                    onClick={() => navigate(`/partners-update/${p._id}`)}
+                    className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
                   >
                     Update
                   </button>
-                  </Link>
                   <button
-                    onClick={() => handleDelete(profile._id)}
-                    className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm"
+                    onClick={() => handleDelete(p._id)}
+                    className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
                   >
                     Delete
                   </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-};
-
-export default MyConnections;
+}

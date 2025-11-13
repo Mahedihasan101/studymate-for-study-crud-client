@@ -6,6 +6,7 @@ import img from '../assets/praja-nugraha--GfxDbc1oNU-unsplash.jpg'
 import Slider from "react-slick";
 
 
+
 const reviews = [
   { 
     name: "John Larson", 

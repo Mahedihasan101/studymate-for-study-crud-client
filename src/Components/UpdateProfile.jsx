@@ -21,7 +21,7 @@ const UpdateProfile = () => {
 
         }
 
-        fetch(`http://localhost:3000/users/${User._id}`, {
+        fetch(`http://localhost:5000/users/${User._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
