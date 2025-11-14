@@ -15,3 +15,9 @@
 }
 .open-sans {
   font-family: "Open Sans", sans-serif;}
+
+  
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

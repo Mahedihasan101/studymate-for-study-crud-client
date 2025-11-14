@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { Link, useNavigate } from "react-router";
+import useTheme from "../hooks/useTheme";
 
 const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext);
     const [openDropdown, setOpenDropdown] = useState(false);
     const navigate = useNavigate();
+    const { theme, toggleTheme } = useTheme();
 
     const handleLogout = () => {
         signOutUser();
@@ -13,7 +15,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-sm text-black">
+        <nav className="fixed top-0 left-0 w-full z-50 dark:bg-black bg-white/80 backdrop-blur-sm text-black">
             <div className="flex justify-between items-center max-w-[1320px] mx-auto p-5">
 
                 <div>
@@ -26,7 +28,6 @@ const Navbar = () => {
                     <Link to="/"><li>Home</li></Link>
                     <Link to="/find-partners"><li>Find Partners</li></Link>
 
-                    {/* SHOW ONLY AFTER LOGIN */}
                     {user && (
                         <>
                             <Link to="/create-partner-profile"><li>Create Partner Profile</li></Link>
@@ -35,7 +36,15 @@ const Navbar = () => {
                     )}
                 </ul>
 
-                <div>
+                <div className="flex items-center gap-4">
+                    {/* DaisyUI theme toggle */}
+                    <input
+                        type="checkbox"
+                        className="toggle toggle-primary"
+                        checked={theme === "dark"}
+                        onChange={(e) => toggleTheme(e.target.checked)}
+                    />
+
                     {user ? (
                         <div className="relative">
                             <img

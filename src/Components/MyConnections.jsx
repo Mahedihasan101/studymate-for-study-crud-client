@@ -1,18 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 
 export default function Connections() {
   const [partners, setPartners] = useState([]);
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-
+  const currentUserMongoId = user?._id || "67410d4e9a4b3ab81a9e4a3c"; // use logged-in user's ID
 
   useEffect(() => {
     const fetchConnections = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/users/${id}/request`);
+        const res = await fetch(`http://localhost:5000/partners`);
         const data = await res.json();
-        setPartners(data);
+
+        const partnersArray = Array.isArray(data) ? data : [];
+        const filteredPartners = partnersArray.filter(
+          partner => partner.partnerCount > 0
+        );
+
+        setPartners(filteredPartners);
       } catch (err) {
         console.error(err);
       }
@@ -21,15 +29,54 @@ export default function Connections() {
     fetchConnections();
   }, []);
 
+  const handleSendRequest = async (partner) => {
+    if (partner.requests?.includes(currentUserMongoId)) {
+      alert("❌ You have already sent a request to this partner!");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:5000/partners/${partner._id}/request`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentUserMongoId }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Failed to send request");
+        return;
+      }
+
+      // update partnerCount and requests locally
+      setPartners((prev) =>
+        prev.map((p) =>
+          p._id === partner._id
+            ? { ...p, partnerCount: p.partnerCount + 1, requests: [...(p.requests || []), currentUserMongoId] }
+            : p
+        )
+      );
+
+      alert("✅ Request sent successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error sending request");
+    }
+  };
+
   const handleDelete = async (partnerId) => {
     if (!window.confirm("Are you sure you want to delete this partner?")) return;
 
     try {
-      await fetch(`http://localhost:5000/users/${id}/remove-connection`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ partnerId })
-      });
+      await fetch(
+        `http://localhost:5000/partners/${currentUserMongoId}/remove-connection`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ partnerId }),
+        }
+      );
 
       setPartners((prev) => prev.filter((p) => p._id !== partnerId));
     } catch (err) {
@@ -49,18 +96,16 @@ export default function Connections() {
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Subject</th>
               <th className="p-3 text-left">Study Mode</th>
-              <th className="p-3 text-left">Availability</th>
-              <th className="p-3 text-left">Location</th>
-              <th className="p-3 text-left">Experience</th>
-              <th className="p-3 text-left">Rating</th>
               <th className="p-3 text-left">Partner Count</th>
-              <th className="p-3 text-left">Email</th>
               <th className="p-3 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
             {partners.map((p) => (
-              <tr key={p._id} className="border-b hover:bg-gray-50 transition duration-200">
+              <tr
+                key={p._id}
+                className="border-b hover:bg-gray-50 transition duration-200"
+              >
                 <td className="p-3">
                   <img
                     src={p.profileimage}
@@ -71,19 +116,8 @@ export default function Connections() {
                 <td className="p-3 font-medium">{p.name}</td>
                 <td className="p-3">{p.subject}</td>
                 <td className="p-3">{p.studyMode}</td>
-                <td className="p-3">{p.availabilityTime}</td>
-                <td className="p-3">{p.location}</td>
-                <td className="p-3">{p.experienceLevel}</td>
-                <td className="p-3">{p.rating} ⭐</td>
                 <td className="p-3">{p.partnerCount}</td>
-                <td className="p-3">{p.email}</td>
                 <td className="p-3 space-x-2">
-                  <button
-                    onClick={() => navigate(`/partners-details/${p._id}`)}
-                    className="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
-                  >
-                    View
-                  </button>
                   <button
                     onClick={() => navigate(`/partners-update/${p._id}`)}
                     className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
@@ -95,6 +129,17 @@ export default function Connections() {
                     className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
                   >
                     Delete
+                  </button>
+                  <button
+                    onClick={() => handleSendRequest(p)}
+                    disabled={p.requests?.includes(currentUserMongoId)}
+                    className={`px-3 py-1 rounded-lg text-white ${
+                      p.requests?.includes(currentUserMongoId)
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-green-500 hover:bg-green-600"
+                    }`}
+                  >
+                    {p.requests?.includes(currentUserMongoId) ? "Request Sent" : "Send Request"}
                   </button>
                 </td>
               </tr>

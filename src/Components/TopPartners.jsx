@@ -8,7 +8,7 @@ const TopPartners = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch("http://localhost:5000/partners")
       .then((res) => res.json())
       .then((data) => {
         const topThree = data

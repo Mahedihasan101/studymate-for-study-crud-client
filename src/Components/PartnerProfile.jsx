@@ -6,16 +6,21 @@ const PartnerProfile = () => {
   const [partner, setPartner] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [requestSent, setRequestSent] = useState(false); // track if request already sent
 
-  // 🔹 Replace with logged-in user _id or keep test value
-  const currentUserMongoId = "67410d4e9a4b3ab81a9e4a3c"; 
+  const currentUserMongoId = "67410d4e9a4b3ab81a9e4a3c";
 
   useEffect(() => {
     const fetchPartner = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/users/${id}`);
+        const res = await fetch(`http://localhost:5000/partners/${id}`);
         const data = await res.json();
         setPartner(data);
+
+        // Check if current user already sent request
+        if (data.requests?.includes(currentUserMongoId)) {
+          setRequestSent(true);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -26,9 +31,11 @@ const PartnerProfile = () => {
   }, [id]);
 
   const handleSendRequest = async () => {
+    if (requestSent) return; // already sent
+
     try {
       setSending(true);
-      const response = await fetch(`http://localhost:5000/users/${id}/request`, {
+      const response = await fetch(`http://localhost:5000/partners/${id}/request`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ currentUserMongoId }),
@@ -41,7 +48,13 @@ const PartnerProfile = () => {
         return;
       }
 
-      setPartner(data);
+      // increment partnerCount locally and mark as sent
+      setPartner((prev) => ({
+        ...prev,
+        partnerCount: prev.partnerCount + 1,
+        requests: [...(prev.requests || []), currentUserMongoId],
+      }));
+      setRequestSent(true);
       alert("✅ Partner request sent successfully!");
     } catch (error) {
       console.error(error);
@@ -74,10 +87,14 @@ const PartnerProfile = () => {
 
           <button
             onClick={handleSendRequest}
-            disabled={sending}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md mt-3 hover:bg-blue-700"
+            disabled={sending || requestSent}
+            className={`px-4 py-2 rounded-md mt-3 text-white ${
+              sending || requestSent
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            {sending ? "Sending..." : "Send Partner Request"}
+            {sending ? "Sending..." : requestSent ? "Request Sent" : "Send Partner Request"}
           </button>
         </div>
       </div>

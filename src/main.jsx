@@ -10,7 +10,7 @@ import Register from './Components/Register.jsx';
 import AuthProvider from './Contexts/AuthContext/AuthProvider.jsx';
 import UserProfile from './Components/UserProfile.jsx';
 import FindPartner from './Components/FindPartners.jsx';
-import PartnerProfile from './Components/PartnerProdile.jsx';
+import PartnerProfile from './Components/PartnerProfile.jsx';
 import CreatePartnerProfile from './Components/CreatePartnerProdile.jsx';
 import MyConnections from './Components/MyConnections.jsx';
 import UpdateProfile from './Components/UpdateProfile.jsx';
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         path: '/update-profile/:id',
         element: <UpdateProfile />,
         loader: async ({ params }) => {
-          const res = await fetch(`http://localhost:5000/users/${params._id}`);
+          const res = await fetch(`http://localhost:5000/partners/${params._id}`);
           const data = await res.json(); 
           return { result: data }; 
         }
