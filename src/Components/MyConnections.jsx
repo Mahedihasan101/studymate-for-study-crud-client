@@ -29,41 +29,7 @@ export default function Connections() {
     fetchConnections();
   }, []);
 
-  const handleSendRequest = async (partner) => {
-    if (partner.requests?.includes(currentUserMongoId)) {
-      alert("❌ You have already sent a request to this partner!");
-      return;
-    }
-
-    try {
-      const res = await fetch(`http://localhost:5000/partners/${partner._id}/request`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ currentUserMongoId }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.message || "Failed to send request");
-        return;
-      }
-
-      // update partnerCount and requests locally
-      setPartners((prev) =>
-        prev.map((p) =>
-          p._id === partner._id
-            ? { ...p, partnerCount: p.partnerCount + 1, requests: [...(p.requests || []), currentUserMongoId] }
-            : p
-        )
-      );
-
-      alert("✅ Request sent successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("❌ Error sending request");
-    }
-  };
+  
 
   const handleDelete = async (partnerId) => {
     if (!window.confirm("Are you sure you want to delete this partner?")) return;
@@ -91,7 +57,7 @@ export default function Connections() {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse shadow-md rounded-lg overflow-hidden">
           <thead className="bg-gray-200">
-            <tr>
+            <tr className="dark:text-black">
               <th className="p-3 text-left">Profile</th>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Subject</th>
@@ -104,9 +70,8 @@ export default function Connections() {
             {partners.map((p) => (
               <tr
                 key={p._id}
-                className="border-b hover:bg-gray-50 transition duration-200"
               >
-                <td className="p-3">
+                <td className="p-3 ">
                   <img
                     src={p.profileimage}
                     alt={p.name}
@@ -119,7 +84,7 @@ export default function Connections() {
                 <td className="p-3">{p.partnerCount}</td>
                 <td className="p-3 space-x-2">
                   <button
-                    onClick={() => navigate(`/partners-update/${p._id}`)}
+                    onClick={() => navigate(`/update-profile/${p._id}`)}
                     className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
                   >
                     Update
@@ -130,17 +95,7 @@ export default function Connections() {
                   >
                     Delete
                   </button>
-                  <button
-                    onClick={() => handleSendRequest(p)}
-                    disabled={p.requests?.includes(currentUserMongoId)}
-                    className={`px-3 py-1 rounded-lg text-white ${
-                      p.requests?.includes(currentUserMongoId)
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-green-500 hover:bg-green-600"
-                    }`}
-                  >
-                    {p.requests?.includes(currentUserMongoId) ? "Request Sent" : "Send Request"}
-                  </button>
+              
                 </td>
               </tr>
             ))}

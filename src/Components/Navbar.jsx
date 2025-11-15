@@ -20,11 +20,11 @@ const Navbar = () => {
 
                 <div>
                     <h1 className="font-black text-[27px]">
-                        Study<span className="text-blue-500">Mate.</span>
+                        <span className="dark:text-white">Study</span><span className="text-blue-500">Mate.</span>
                     </h1>
                 </div>
 
-                <ul className="flex gap-6 font-medium text-[15px]">
+                <ul className="flex gap-6 font-medium text-[15px] dark:text-white">
                     <Link to="/"><li>Home</li></Link>
                     <Link to="/find-partners"><li>Find Partners</li></Link>
 

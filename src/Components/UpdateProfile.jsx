@@ -8,33 +8,31 @@ const UpdateProfile = () => {
     const handleUpdate = (e) => {
         e.preventDefault()
         const formData = {
-            name: e.target.name.value,
-            experience: e.target.experience.value,
-            imageUrl: e.target.imageUrl.value,
-            subject: e.target.subject.value,
-            studyMode: e.target.studyMode.value,
-            availabilityTime: e.target.availabilityTime.value,
-            location: e.target.location.value,
-            partnerCount: 0,
-            rating: 0,
-            email: User.email
+    name: e.target.name.value,
+    experience: e.target.experience.value,
+    imageUrl: e.target.imageUrl.value,
+    subject: e.target.subject.value,
+    studyMode: e.target.studyMode.value,
+    availabilityTime: e.target.availabilityTime.value,
+    location: e.target.location.value,
+    
+     rating: Number(e.target.rating.value) || 0,
+    email: User.email
+};
 
-        }
+const userId = User._id.toString()
+      fetch(`http://localhost:5000/partners/${userId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData)
+})
+.then(res => res.json())
+.then(updatedUser => {
+    console.log("Updated:", updatedUser);
+    alert("Profile updated successfully!");
+})
+.catch(err => console.log(err));
 
-        fetch(`http://localhost:5000/users/${User._id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
     }
 
 
@@ -136,7 +134,7 @@ const UpdateProfile = () => {
 
                             className="border border-blue-600   rounded-2xl px-4 py-2 my-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
                         />
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <input
 
                                 type="text"
@@ -156,16 +154,7 @@ const UpdateProfile = () => {
 
                                 className="border border-blue-600   rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
-                            <input
-                                type="text"
-                                name="partnerCount"
-                                defaultValue={User.
-                                    partnerCount}
-                                required
-                                placeholder="Partner Count"
-
-                                className="border border-blue-600  rounded-2xl l  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                            />
+                           
                         </div>
                     </div>
 

@@ -8,14 +8,14 @@ const steps = [
 ];
 
 const HowItWorks = () => (
-  <div className="py-20 bg-[#F8FAFF]">
-    <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">How It Works</h2>
+  <div className="py-20 bg-[#F8FAFF] dark:bg-black">
+    <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12 dark:text-white">How It Works</h2>
 
     <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 px-6 text-center">
       {steps.map((s, i) => (
-        <div key={i} className="p-6 bg-white border rounded-xl hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+        <div key={i} className="p-6 bg-white border rounded-xl hover:-translate-y-2 hover:shadow-xl transition-all duration-300 dark:bg-gray-400">
           <div className="text-blue-600 mb-4 flex justify-center">{s.icon}</div>
-          <h3 className="font-semibold text-lg mb-2">{s.title}</h3>
+          <h3 className="font-semibold text-lg mb-2 dark:text-black">{s.title}</h3>
           <p className="text-gray-600 text-sm">{s.desc}</p>
         </div>
       ))}

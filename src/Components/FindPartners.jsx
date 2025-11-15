@@ -32,7 +32,7 @@ export default function FindPartner() {
   return (
     <div className="max-w-6xl mx-auto px-5 py-8">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mt-10">
-        Find <span className="text-blue-500">Study Partner</span>
+        <span className="dark:text-white">Find</span> <span className="text-blue-500">Study Partner</span>
       </h2>
 
       {/* Search + Sort Controls */}
@@ -62,16 +62,16 @@ export default function FindPartner() {
         {filteredPartners.map((p) => (
           <div
             key={p._id}
-            className="border rounded-xl p-5 shadow-sm hover:shadow-md transition bg-white"
+            className="border rounded-xl p-5 shadow-sm hover:shadow-md transition bg-white dark:bg-gray-400"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 ">
               <img
                 src={p.profileimage}
                 alt={p.name}
-                className="w-16 h-16 rounded-full border object-cover"
+                className="w-16 h-16 rounded-full border dark:border-black object-cover"
               />
               <div>
-                <h3 className="text-lg font-medium">{p.name}</h3>
+                <h3 className="text-lg font-medium dark:text-black">{p.name}</h3>
                 <p className="text-sm text-gray-600">{p.subject}</p>
               </div>
             </div>

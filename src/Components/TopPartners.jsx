@@ -27,19 +27,19 @@ const TopPartners = () => {
   };
 
   return (
-    <div className="py-20 bg-white max-w-7xl mx-auto px-6">
+    <div className="py-20 bg-white  mx-auto px-6 dark:bg-black">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10">
-        Top Study <span className="text-blue-500">Partners</span>
+       <span className="dark:text-white"> Top Study</span> <span className="text-blue-500">Partners</span>
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-8 max-w-7xl  mx-auto ">
         {partners.map((partner) => (
           <div
             key={partner.id}
-            className="p-6 border rounded-xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center"
+            className="p-6 border rounded-xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center dark:bg-gray-400"
           >
             <img
-              src={partner.img}
+              src={partner?.profileimage}
               className="w-28 h-28 mx-auto rounded-full border-3 border-blue-600 object-cover mb-4"
             />
             <h3 className="text-xl font-semibold">{partner.name}</h3>
