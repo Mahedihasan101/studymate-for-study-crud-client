@@ -1,8 +1,10 @@
 // FindPartner.js
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router"; 
+import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 
 export default function FindPartner() {
+const {user} =useContext(AuthContext)
   const [partners, setPartners] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
@@ -28,6 +30,13 @@ export default function FindPartner() {
       if (sort === "rating") return b.rating - a.rating;
       return 0;
     });
+    const handleViewProfile = (id) => {
+    if (user) {
+      navigate(`/partners-details/${id}`);
+    } else {
+      navigate("/login", { state: { from: `/partners-details/${id}` } });
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-5 py-8">
@@ -97,7 +106,7 @@ export default function FindPartner() {
             </div>
 
             <button
-              onClick={() => navigate(`/partners-details/${p._id}`)}
+               onClick={() => handleViewProfile(p._id)}
               className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
               View Profile
