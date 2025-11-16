@@ -1,16 +1,63 @@
-# React + Vite
+# 🎓 StudyMate – Find Your Perfect Study Partner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean, modern, and intuitive web application designed to connect students with ideal study partners. Whether preparing for exams or collaborating on assignments, StudyMate helps learners find peers with matching goals, subjects, and study styles.
+---
 
-Currently, two official plugins are available:
+## 🚀 Purpose
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The aim of this project is to create a seamless platform where students can:
 
-## React Compiler
+Discover fellow learners
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Match based on subjects, interests, or study goals
 
-## Expanding the ESLint configuration
+Connect safely and efficiently
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+StudyMate makes collaboration easier, faster, and more meaningful for students worldwide.
+---
+
+## 🔗 Live URL
+
+👉 [Visit Live Site](https://[My-live-link-here.com].(https://radiant-klepon-72d656.netlify.app/)
+
+---
+
+## ✨ Key Features
+
+- 🔍 Student Matching: Browse and filter students by subjects, interests, availability, or skill level.
+- 👥 User Profiles: Each student has a detailed profile with study preferences and goals.
+-💬 Connection Requests: Send and receive study partner invites.
+- 📚 Subject-Based Discovery: Explore students grouped by subjects like Math, Science, Programming, etc.
+- 📱 Responsive UI: Works smoothly across mobile, tablet, and desktop.
+- 🎨 Modern Interface: Tailwind CSS + DaisyUI for a clean and engaging look.
+- 🔐 Secure Authentication: JWT-based login/signup system.
+- 🗄️ Dynamic Data: Fully connected to a Node.js + Express + MongoDB backend. 
+
+---
+
+## 🧠 Tech Stack
+
+
+## Frontend
+
+- React + Vite
+
+- Tailwind CSS + DaisyUI
+
+- React Router DOM
+
+- Lucide React Icons
+
+## Backend
+
+- Node.js + Express.js
+
+- MongoDB + Mongoose
+
+- JWT Authentication
+
+- REST API architecture
+ 
+
+---
+
