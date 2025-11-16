@@ -14,6 +14,7 @@ import PartnerProfile from './Components/PartnerProfile.jsx';
 import CreatePartnerProfile from './Components/CreatePartnerProdile.jsx';
 import MyConnections from './Components/MyConnections.jsx';
 import UpdateProfile from './Components/UpdateProfile.jsx';
+import NotFound404 from './Components/NotRound404.jsx';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
           const data = await res.json(); 
           return { result: data }; 
         }
+      },
+      {
+        path:'*',
+        element:<NotFound404/>
       }
     ],
   },
