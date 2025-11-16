@@ -48,13 +48,13 @@ const userId = User._id.toString()
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mt-10 mb-5">Update <span className="text-blue-500">Your Profile</span></h2>
                 <form onSubmit={handleUpdate}
 
-                    className=" rounded-2xl shadow-2xl p-8 w-full max-w-3xl  bg-white/75 "
+                    className=" rounded-2xl shadow-2xl p-8 w-full max-w-3xl dark:bg-black/90 bg-white/75 "
                 >
 
 
                     {/* Basic Info */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        <h3 className="text-lg font-semibold dark:text-white text-gray-700 mb-2">
                             Basic Info
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -66,7 +66,7 @@ const userId = User._id.toString()
                                 placeholder=" Enter name"
 
 
-                                className="border border-blue-600   rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white  rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                             <input
                                 type="text"
@@ -76,7 +76,7 @@ const userId = User._id.toString()
                                 placeholder="Experience Level"
 
 
-                                className="border border-blue-600   rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white  rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                         </div>
                         <input
@@ -86,13 +86,13 @@ const userId = User._id.toString()
                             required
                             placeholder="Profile image"
 
-                            className="border border-blue-600   rounded-2xl px-4 py-2 mt-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            className="border border-blue-600 dark:text-white  rounded-2xl px-4 py-2 mt-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
                         />
                     </div>
 
 
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-700 dark:text-white mb-2">
                             Study Details
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -104,7 +104,7 @@ const userId = User._id.toString()
                                 required
                                 placeholder="Subject"
 
-                                className="border border-blue-600   rounded-2xl px-4 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white  rounded-2xl px-4 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                             <input
                                 type="text"
@@ -113,7 +113,7 @@ const userId = User._id.toString()
                                 required
                                 placeholder=" Study mode"
 
-                                className="border border-blue-600   rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white  rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                             <input
                                 type="text"
@@ -122,7 +122,7 @@ const userId = User._id.toString()
                                 required
                                 placeholder="Availability time"
 
-                                className="border border-blue-600  rounded-2xl l  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white rounded-2xl l  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                         </div>
                         <input
@@ -132,7 +132,7 @@ const userId = User._id.toString()
                             required
                             placeholder="Email"
 
-                            className="border border-blue-600   rounded-2xl px-4 py-2 my-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            className="border border-blue-600 dark:text-white  rounded-2xl px-4 py-2 my-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400"
                         />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <input
@@ -143,7 +143,7 @@ const userId = User._id.toString()
                                 required
                                 placeholder="Location"
 
-                                className="border border-blue-600   rounded-2xl px-4 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white  rounded-2xl px-4 py-2  focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                             <input
                                 type="text"
@@ -152,7 +152,7 @@ const userId = User._id.toString()
                                 required
                                 placeholder="Rating"
 
-                                className="border border-blue-600   rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                className="border border-blue-600 dark:text-white  rounded-2xl  px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                             />
                            
                         </div>
