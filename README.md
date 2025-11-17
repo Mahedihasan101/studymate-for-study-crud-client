@@ -18,7 +18,7 @@ StudyMate makes collaboration easier, faster, and more meaningful for students w
 
 ## 🔗 Live URL
 
-👉 [Visit Live Site](https://[My-live-link-here.com].(tranquil-figolla-8929bf.netlify.app)
+👉 [Visit Live Site](https://[My-live-link-here.com].(https://tranquil-figolla-8929bf.netlify.app/)
 
 ---
 
